@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guiaWebService">
+
+	<resultMap type="guiaWebService" id="guiaWS">
+		<result column="i_numero"							property="inumero"/>
+		<result column="id_guia"							property="iguia"/>
+		<result column="id_destino"						    property="valorLibre7"/>
+		<result column="id_ot"						        property="valorLibre8"/>
+		<result column="rut" 					            property="rutEmisor"/>
+		<result column="rznsoc"                             property="rznSoc"/>
+		<result column="ACTIVECON"                         property="activeEcon"/>
+		<result column="id_origen"							property="sucursal"/>
+		<result column="DIRECCIONORIGEN"						property="dirOrigen"/>
+		<result column="COMUNAORIGEN"                    	    property="cmnaOrigen"/>
+		<result column="s_ciudad"						    property="ciudadOrigen"/>
+		<result column="rut"    							property="rutRecep"/>
+		<result column="rznSoc"     						property="rznSocRecep"/>
+		<result column="giro"       						property="giroRecep"/>
+		<result column="DIRRECEP"						property="dirRecep"/>
+		<result column="CMNARECEP"						        property="cmnaRecep"/>
+		<result column="s_ciudad"         				    property="ciudadRecep"/>
+		<result column="DIRDEST"						property="dirDest"/>
+		<result column="CMNADEST"							property="cmnaDest"/>
+		<result column="s_ciudad"  						    property="ciudadDest"/>
+		<result column="id_transportista"					property="rutTrans"/>
+		<result column="id_producto"						property="vlrCodigo"/>
+		<result column="i_rut"    							property="rutRecepSTA"/>
+		<result column="s_razon_social"    					property="rznSocRecepSTA"/>
+		<result column="s_giro"       						property="giroRecepSTa"/>
+		<result column="s_descripcion"       				property="nmbItem"/>
+		<result column="i_cliente_rut"    					property="rutRecepCliente"/>
+		<result column="s_cliente_nombre"     				property="rznSocRecepCliente"/>
+		<result column="GIRO_RECEP"       					property="giroRecepCliente"/>
+		<result column="DIRRECEP"							property="dirRecepCliente"/>
+		<result column="CMNARECEP"							property="comunaRecep"/>
+		<result column="id_documento"						property="folioRef"/>
+		
+
+	</resultMap>
+	
+	<select id="getRequestTI" parameterType="Long" resultMap="guiaWS">
+	select
+		a.I_NUMERO, 
+        a.ID_DESTINO,
+        b.RUT,
+        b.RZNSOC,
+        b.GIRO,
+        b.ACTIVECON,
+        a.ID_ORIGEN,
+        g.S_DIRECCION as DIRECCIONORIGEN,
+        d.S_NOMBRE as CMNADEST,
+        H.S_CIUDAD AS CIUDADORIGEN,
+        b.RUT AS RUTRECEP,
+        b.RZNSOC AS RZNSOCRECEP,
+        b.GIRO AS GIRORECEP,
+        b.DIRECCION AS DIRRECEP,
+        b.COMUNA AS CMNARECEP,
+        b.CIUDAD AS CIUDADRECEP,
+        c.S_DIRECCION AS DIRDEST,
+        h.S_NOMBRE AS COMUNAORIGEN, 
+        d.S_CIUDAD AS CIUDADDEST,
+        a.ID_TRANSPORTISTA,
+        e.ID_PRODUCTO,
+        e.ID_OT,
+        e.ID_DOCUMENTO,
+        f.S_DESCRIPCION
+		FROM 
+		SSTT_GUIAS a, 
+		SSTT_DATOS_DIN b, 
+		SSTT_UBICACIONES c, 
+		SSTT_COMUNAS d, 
+		SSTT_ORDENES_TRABAJO e,
+		OWV_PRODUCTOS f,
+        SSTT_UBICACIONES g,
+        SSTT_COMUNAS h
+        
+        
+		
+		<where>
+		a.ID_GUIA = #{iguia}  AND
+		c.ID_UBICACION=a.ID_DESTINO AND
+		d.ID_COMUNA=c.ID_COMUNA AND 
+		e.ID_OT= a.ID_OT AND 
+		f.ID_PRODUCTO=e.ID_PRODUCTO AND
+        g.ID_UBICACION =a.ID_origen AND
+        h.ID_COMUNA=g.ID_COMUNA
+		</where>
+	</select>
+	
+	
+	<resultMap type="guiaWebService" id="guiaWS_Client">
+		<result column="i_numero"							property="inumero"/>
+		<result column="id_guia"							property="iguia"/>
+		<result column="id_ot"						        property="valorLibre8"/>
+		<result column="RUTEMISOR" 					        property="rutEmisor"/>
+		<result column="RZNSOCEMISOR"                       property="rznSoc"/>
+		<result column="ACTIVECONEMISOR"                    property="activeEcon"/>
+		<result column="SUCURSAL"							property="sucursal"/>
+		<result column="DIRORIGEN"							property="dirOrigen"/>
+		<result column="CMNAORIGEN"                    	    property="cmnaOrigen"/>
+		<result column="CIUDADORIGEN"						property="ciudadOrigen"/>
+		<result column="RUTRECEP"    						property="rutRecep"/>
+		<result column="RZNSOCRECEP"     					property="rznSocRecep"/>
+		<result column="giro"       						property="giroRecep"/>
+		<result column="DIRRECEP"							property="dirRecep"/>
+		<result column="COMUNARECEP"						property="cmnaRecep"/>
+		<result column="CIUDADRECEP"         				property="ciudadRecep"/>
+		<result column="s_direccion"						property="dirDest"/>
+		<result column="CMNADEST"							property="cmnaDest"/>
+		<result column="s_ciudad"  						    property="ciudadDest"/>
+		<result column="id_transportista"					property="rutTrans"/>
+		<result column="id_producto"						property="vlrCodigo"/>
+		<result column="i_rut"    							property="rutRecepSTA"/>
+		<result column="s_razon_social"    					property="rznSocRecepSTA"/>
+		<result column="s_giro"       						property="giroRecepSTa"/>
+		<result column="s_descripcion"       				property="nmbItem"/>
+		<result column="i_cliente_rut"    					property="rutRecepCliente"/>
+		<result column="RZNSOCRECEP"     					property="rznSocRecepCliente"/>
+		<result column="GIRO_RECEP"       					property="giroRecepCliente"/>
+		<result column="DIRRECEP"							property="dirRecepCliente"/>
+		<result column="COMUNARECEP"						property="comunaRecep"/>
+		<result column="id_documento"						property="folioRef"/>
+		
+
+	</resultMap>
+	
+<select id="getRequestForClient" parameterType="Long" resultMap="guiaWS_Client">
+
+SELECT	
+        a.ID_OT,
+        case
+        when a.S_TIPO_DOCUMENTO='boleta' 
+            then 'Persona Natural'
+        when a.S_TIPO_DOCUMENTO='factura'
+            then a.S_GIRO_EMPRESA
+        end AS GIRO_RECEP, 
+        b.RUT AS RUTEMISOR,
+        b.RZNSOC AS RZNSOCEMISOR,
+        b.GIRO AS GIROEMISOR,
+        b.ACTIVECON AS ACTIVECONEMISOR,
+        c.ID_ORIGEN AS SUCURSAL,
+        d.S_DIRECCION AS DIRORIGEN,
+        e.S_NOMBRE AS CMNAORIGEN,
+        e.S_CIUDAD AS CIUDADORIGEN,
+        a.I_CLIENTE_RUT as RUTRECEP,
+        a.S_CLIENTE_NOMBRE RZNSOCRECEP,
+        f.S_CALLE||' '||S_NUMERO AS DIRRECEP,
+        i.S_NOMBRE as COMUNARECEP,
+        i.S_CIUDAD AS CIUDADRECEP ,
+        i.S_NOMBRE AS CMNADEST,
+        a.ID_PRODUCTO,
+        g.S_DESCRIPCION,
+        a.ID_DOCUMENTO
+FROM SSTT_ORDENES_TRABAJO a, SSTT_DATOS_DIN b, SSTT_GUIAS c,SSTT_UBICACIONES d, SSTT_COMUNAS e, SSTT_CLIENTES f, OWV_PRODUCTOS g,SSTT_UBICACIONES h, SSTT_COMUNAS i
+WHERE
+c.ID_GUIA = #{iguia} AND d.ID_UBICACION= c.ID_ORIGEN
+AND e.ID_COMUNA= d.ID_COMUNA AND a.ID_OT= c.ID_OT AND c.ID_DESTINO= h.ID_UBICACION AND f.ID_COMUNA=i.ID_COMUNA
+AND f.ID_CLIENTE= a.ID_CLIENTE AND g.ID_PRODUCTO= a.ID_PRODUCTO
+</select>
+
+
+<resultMap type="guiaWebService" id="guiaWS_STA">
+		<result column="i_numero"							property="inumero"/>
+		<result column="id_guia"							property="iguia"/>
+		<result column="id_ot"						        property="valorLibre8"/>
+		<result column="rutEmisor" 					        property="rutEmisor"/>
+		<result column="rznEmisor"                          property="rznSoc"/>
+		<result column="activeconEmis"                      property="activeEcon"/>
+		<result column="sucursalOrigen"						property="sucursal"/>
+		<result column="dirOrigen"							property="dirOrigen"/>
+		<result column="COMUNAORIG"                    	    property="cmnaOrigen"/>
+		<result column="ciudadOrig"						    property="ciudadOrigen"/>
+		<result column="rutReceptor"    					property="rutRecep"/>
+		<result column="razonSocialRecep"     				property="rznSocRecep"/>
+		<result column="giroEmis"       					property="giroEmisor"/>
+		<result column="DIRECCIONRECEP"						property="dirRecep"/>
+		<result column="comunaRecep"						property="cmnaRecep"/>
+		<result column="ciudadRecep"         				property="ciudadRecep"/>
+		<result column="g.s_direccion"						property="dirDest"/>
+		<result column="comunaRecep"						property="cmnaDest"/>
+		<result column="s_ciudad"  						    property="ciudadDest"/>
+		<result column="ID_TRANSPORTISTA"					property="rutTrans"/>
+		<result column="id_producto"						property="vlrCodigo"/>
+		<result column="i_rut"    							property="rutRecepSTA"/>
+		<result column="s_razon_social"    					property="rznSocRecepSTA"/>
+		<result column="GIRORECEP"       					property="giroRecepSTA"/>
+		<result column="s_descripcion"       				property="nmbItem"/>
+		<result column="i_cliente_rut"    					property="rutRecepCliente"/>
+		<result column="s_cliente_nombre"     				property="rznSocRecepCliente"/>
+		<result column="GIRO_RECEP"       					property="giroRecepCliente"/>
+		<result column="comunaRecep"						property="cmnaRecep"/>
+		<result column="id_documento"						property="folioRef"/>
+		
+		
+
+	</resultMap>
+
+
+<select id="getRequestForSTA" parameterType="Long" resultMap="guiaWS_STA">
+  SELECT
+      a.ID_OT,
+      b.RUT as rutEmisor,
+      b.RZNSOC as rznEmisor,
+      b.GIRO as giroEmis,
+      b.ACTIVECON as activeconEmis,
+      c.ID_ORIGEN as sucursalOrigen,
+      d.S_DIRECCION dirOrigen,
+      e.S_NOMBRE AS COMUNAORIG,
+      e.S_CIUDAD as ciudadOrig,
+      g.I_RUT as rutReceptor,
+      g.S_RAZON_SOCIAL razonSocialRecep,
+      G.S_GIRO AS GIRORECEP,
+      g.S_DIRECCION as DIRECCIONRECEP,
+      h.S_NOMBRE as comunaRecep,
+      h.S_CIUDAD as ciudadRecep,
+      c.ID_TRANSPORTISTA,
+      a.ID_PRODUCTO,
+      f.S_DESCRIPCION,
+      a.ID_DOCUMENTO
+FROM SSTT_ORDENES_TRABAJO a,
+SSTT_DATOS_DIN b,
+SSTT_GUIAS c,
+SSTT_UBICACIONES d,
+SSTT_COMUNAS e,
+OWV_PRODUCTOS f,
+SSTT_UBICACIONES g,
+SSTT_COMUNAS h
+<where>
+c.ID_GUIA =#{iguia} AND d.ID_UBICACION= c.ID_ORIGEN AND
+g.ID_UBICACION=c.ID_DESTINO AND
+e.ID_COMUNA= d.ID_COMUNA AND
+h.ID_COMUNA=g.ID_COMUNA AND
+a.ID_OT= c.ID_OT AND
+f.ID_PRODUCTO= a.ID_PRODUCTO
+</where>
+</select>
+	
+<select id="lastGuia" resultType="integer">
+
+SELECT ID_GUIA FROM (SELECT * FROM SSTT_GUIAS ORDER BY ID_GUIA DESC) WHERE ROWNUM=1
+
+</select>
+
+<select	id="lastCorrelativo" resultType="integer">
+
+SELECT CORRELATIVO FROM(SELECT  * FROM SSTT_GUIAS WHERE CORRELATIVO IS NOT NULL ORDER BY CORRELATIVO DESC) WHERE ROWNUM=1
+
+</select>
+
+<update id="updateCorrelativo" parameterType="Guia">
+	update sstt_guias set 
+			correlativo= #{corr} 
+			<where>
+			ID_GUIA= #{id}
+			</where>
+
+</update>	
+	
+	
+	<update id="updateById" parameterType="Long">
+		update sstt_guias set 
+			 i_numero  = #{numero}
+			 
+			 <where>
+			 id_guia = #{id}
+			 </where>
+			
+	</update>
+	
+	
+	
+	
+</mapper>

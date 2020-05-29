@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="guiaGetPDFWS">   
+    
+    <resultMap type="guiaGetPDFWS" id="getPdf">
+		<result column="i_guia"               	property="idGuia"/>
+		<result column="rut"               		property="rutEmisor"/>
+		<result column="i_numero"             	property="folioDoc"/>
+		<result column="d_fecha_emision"      	property="fechaEmision"/>
+		<result column="i_rut"       			property="rutReceptor"/>
+	</resultMap>
+    
+<select id="getRequestForPdf" parameterType="Long" resultMap="getPdf">
+
+select
+    e.rut as rutEmisor,
+    g.i_numero as folioDoc,
+    g.d_fecha_emision as fechaEmision,
+    u.i_rut as rutReceptor
+from sstt_datos_din e, sstt_guias g, sstt_ubicaciones u
+<where>
+    g.id_guia = #{idGuia}
+and
+    g.id_destino = u.id_ubicacion
+</where>
+</select>
+</mapper>

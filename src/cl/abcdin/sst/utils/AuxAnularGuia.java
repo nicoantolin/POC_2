@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -19,7 +21,12 @@ import cl.abcdin.sst.exceptions.SSTException;
 public class AuxAnularGuia {
 
 	public static int consume(String protocol, String wsURL, String host, String soapAction, String xmlInput) throws SSTException {
-
+		
+		
+		String pueba = "valor1";
+		int prueba2 = 1;
+		float float1 = 10;
+		
 		// Inicializa variables
 		int codigoResponse = 0;
 		URL url = null;
@@ -81,7 +88,7 @@ public class AuxAnularGuia {
 				outputString = outputString + responseString;
 			}
 			
-			System.out.println("---------- Response anular guíaws ----------");
+			System.out.println("---------- Response anular guï¿½aws ----------");
 			System.out.println(outputString);
 
 			byte[] xml = outputString.getBytes();
