@@ -10,6 +10,10 @@ public class Configuraciones {
 	
 	
         private static Properties props2;
+		
+		private String pruebaGit="Hola git";
+		private int pruebaHub=0;
+		//Hola comentario.
 
         public static String getString(String key) {
         	
